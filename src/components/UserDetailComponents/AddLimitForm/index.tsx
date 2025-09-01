@@ -11,7 +11,7 @@ const { Option } = Select;
 const limitSchema = z.object({
   limitPeriod: z.enum(['daily', 'weekly', 'monthly']),
   limitType: z.enum(['bet', 'deposit']),
-  limitValue: z.number().positive({ message: 'Input positive number' }),
+  limitValue: z.number().min(1, { message: 'Limit must be at least 1' }),
   limitValueType: z.enum(['percent', 'amount']),
   status: z.boolean(),
 });
@@ -20,11 +20,9 @@ type LimitFormData = z.infer<typeof limitSchema>;
 
 const AddLimitForm = ({ onAdd }: { onAdd: (newLimit: any) => void }) => {
   const {
-    register,
     handleSubmit,
     formState: { errors },
     setValue,
-    watch,
     reset,
   } = useForm<LimitFormData>({
     resolver: zodResolver(limitSchema),

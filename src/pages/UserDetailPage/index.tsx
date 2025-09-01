@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { User } from '../../types/User';
-import { fetchLimits, fetchUserDetailById } from '../../services/api.ts';
+import { fetchUserDetailById } from '../../services/api.ts';
 import { getRandomAvatar } from '../../utils/getRandomAvatar.ts';
 import { Limit } from '../../types/Limit.ts';
 import UserLimits from '../../components/UserDetailComponents/UserLimits/index.tsx';
