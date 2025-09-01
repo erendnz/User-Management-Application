@@ -27,7 +27,6 @@ const UserLimits = ({
   );
 
 
-
   return (
     <div className="user-limits-table">
       <div className="table-header">

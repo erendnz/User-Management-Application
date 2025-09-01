@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { limitsApi } from "../services/limitsApi.ts";
-import sidebarReducer from "./sidebarSlice.ts";
-import globalLoadingReducer from "./globalLoadingSlice.ts";
-import globalErrorReducer from "./globalErrorSlice.ts";
+import sidebarReducer from "./reducers/sidebarSlice.ts";
+import globalLoadingReducer from "./reducers/globalLoadingSlice.ts";
+import globalErrorReducer from "./reducers/globalErrorSlice.ts";
 
 export const store = configureStore({
   reducer: {

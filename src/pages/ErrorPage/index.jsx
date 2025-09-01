@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { clearError } from "../../store/globalErrorSlice.ts";
+import { clearError } from "../../store/reducers/globalErrorSlice.ts";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import "./index.scss";
 

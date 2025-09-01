@@ -6,7 +6,7 @@ import { fetchUsers } from "../../services/api.ts";
 import "./index.scss";
 import { userListColumns } from "./columns.tsx";
 import { useDispatch } from "react-redux";
-import { setError } from "../../store/globalErrorSlice.ts";
+import { setError } from "../../store/reducers/globalErrorSlice.ts";
 import { Error } from "../../types/Error.ts";
 
 export default function UserList() {

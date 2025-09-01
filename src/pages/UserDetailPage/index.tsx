@@ -8,7 +8,7 @@ import UserLimits from "../../components/UserDetailComponents/UserLimits/index.t
 import UserDetailCard from "../../components/UserDetailComponents/UserDetailCard/index.tsx";
 import "./index.scss";
 import { Error } from "../../types/Error.ts";
-import { setError } from "../../store/globalErrorSlice.ts";
+import { setError } from "../../store/reducers/globalErrorSlice.ts";
 import { useDispatch } from "react-redux";
 
 const UserDetailsPage = () => {

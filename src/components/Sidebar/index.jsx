@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { toggleSidebar } from "../../store/sidebarSlice.ts";
+import { toggleSidebar } from "../../store/reducers/sidebarSlice.ts";
 import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "./index.scss";
