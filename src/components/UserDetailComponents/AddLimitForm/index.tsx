@@ -11,7 +11,7 @@ const { Option } = Select;
 const limitSchema = z.object({
   limitPeriod: z.enum(['daily', 'weekly', 'monthly']),
   limitType: z.enum(['bet', 'deposit']),
-  limitValue: z.number().min(1, { message: 'Limit must be at least 1' }),
+  limitValue: z.number().positive({ message: 'Input positive number' }),
   limitValueType: z.enum(['percent', 'amount']),
   status: z.boolean(),
 });
