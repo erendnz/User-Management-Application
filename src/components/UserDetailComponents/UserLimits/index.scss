@@ -1,5 +1,4 @@
 .user-limits-table {
-
   .table-header {
     display: flex;
     justify-content: space-between;
@@ -24,14 +23,14 @@
     border-radius: 8px;
     overflow: hidden;
 
-    .ant-table-thead>tr>th {
-      background-color: #EEF3FF !important;
+    .ant-table-thead > tr > th {
+      background-color: #eef3ff !important;
       font-weight: 600;
       color: #222;
       font-size: 15px;
     }
 
-    .ant-table-tbody>tr>td {
+    .ant-table-tbody > tr > td {
       font-size: 14px;
       color: #444;
     }

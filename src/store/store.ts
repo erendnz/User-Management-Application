@@ -1,8 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { limitsApi } from "../services/limitsApi.ts";
-import sidebarReducer from "./reducers/sidebarSlice.ts";
-import globalLoadingReducer from "./reducers/globalLoadingSlice.ts";
-import globalErrorReducer from "./reducers/globalErrorSlice.ts";
+import { configureStore } from '@reduxjs/toolkit';
+import { limitsApi } from '../services/limitsApi.ts';
+import sidebarReducer from './reducers/sidebarSlice.ts';
+import globalLoadingReducer from './reducers/globalLoadingSlice.ts';
+import globalErrorReducer from './reducers/globalErrorSlice.ts';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +11,5 @@ export const store = configureStore({
     loading: globalLoadingReducer,
     error: globalErrorReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(limitsApi.middleware),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(limitsApi.middleware),
 });

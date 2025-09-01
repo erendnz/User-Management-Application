@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 interface LoadingState {
   isLoading: boolean;
@@ -9,13 +9,13 @@ const initialState: LoadingState = {
 };
 
 const globalLoadingSlice = createSlice({
-  name: "loading",
+  name: 'loading',
   initialState,
   reducers: {
-    showLoading: (state) => {
+    showLoading: state => {
       state.isLoading = true;
     },
-    hideLoading: (state) => {
+    hideLoading: state => {
       state.isLoading = false;
     },
   },

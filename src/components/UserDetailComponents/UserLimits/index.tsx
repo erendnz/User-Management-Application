@@ -1,9 +1,9 @@
-import { Table, Button } from "antd";
-import { useMemo, useState } from "react";
-import { Limit } from "../../../types/Limit.ts";
-import "./index.scss";
-import AddLimitModal from "../../../modals/AddLimitModal/index.tsx";
-import { limitColumns } from "./columns.tsx";
+import { Table, Button } from 'antd';
+import { useMemo, useState } from 'react';
+import { Limit } from '../../../types/Limit.ts';
+import './index.scss';
+import AddLimitModal from '../../../modals/AddLimitModal/index.tsx';
+import { limitColumns } from './columns.tsx';
 
 const UserLimits = ({
   limits,
@@ -16,16 +16,11 @@ const UserLimits = ({
   onLimitDeleted: (id: string) => void;
   currency: string;
 }) => {
-
   const [modalOpen, setModalOpen] = useState(false);
   const [pageSize, setPageSize] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const columns = useMemo(
-    () => limitColumns(onLimitDeleted, currency),
-    [onLimitDeleted, currency]
-  );
-
+  const columns = useMemo(() => limitColumns(onLimitDeleted, currency), [onLimitDeleted, currency]);
 
   return (
     <div className="user-limits-table">
@@ -44,12 +39,12 @@ const UserLimits = ({
           current: currentPage,
           pageSize,
           showSizeChanger: true,
-          pageSizeOptions: ["5", "10", "20"],
+          pageSizeOptions: ['5', '10', '20'],
           onChange: (page, size) => {
             setCurrentPage(page);
             setPageSize(size);
           },
-          locale: { items_per_page: "" },
+          locale: { items_per_page: '' },
         }}
         bordered
       />
@@ -57,7 +52,7 @@ const UserLimits = ({
       <AddLimitModal
         visible={modalOpen}
         onClose={() => setModalOpen(false)}
-        onAdd={(newLimit) => {
+        onAdd={newLimit => {
           onLimitAdded(newLimit);
           setModalOpen(false);
         }}

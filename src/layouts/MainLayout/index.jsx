@@ -1,17 +1,17 @@
-import { ReactNode, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import Header from "../../components/Header/index.js";
-import Sidebar from "../../components/Sidebar/index.jsx";
-import { closeSidebar } from "../../store/reducers/sidebarSlice.ts";
-import { hideLoading, showLoading } from "../../store/reducers/globalLoadingSlice.ts";
-import { Spin } from "antd";
-import "./index.scss";
+import { ReactNode, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import Header from '../../components/Header/index.js';
+import Sidebar from '../../components/Sidebar/index.jsx';
+import { closeSidebar } from '../../store/reducers/sidebarSlice.ts';
+import { hideLoading, showLoading } from '../../store/reducers/globalLoadingSlice.ts';
+import { Spin } from 'antd';
+import './index.scss';
 
 const MainLayout = ({ children }) => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.loading.isLoading);
+  const isLoading = useSelector(state => state.loading.isLoading);
 
   useEffect(() => {
     dispatch(closeSidebar());
