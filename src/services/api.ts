@@ -1,4 +1,4 @@
-const BASE_URL = "https://dummyjson.com";
+import {BASE_URL} from "../constants/apiUrl.ts";
 
 export const fetchUsers = async () => {
   const res = await fetch(`${BASE_URL}/users?select=id,firstName,lastName,age,email,username,bank`);

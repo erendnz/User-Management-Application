@@ -10,6 +10,7 @@ import "./index.scss";
 import { Error } from "../../types/Error.ts";
 import { setError } from "../../store/reducers/globalErrorSlice.ts";
 import { useDispatch } from "react-redux";
+import { hideLoading, showLoading } from "../../store/reducers/globalLoadingSlice.ts";
 
 const UserDetailsPage = () => {
   const { userId } = useParams();
@@ -31,6 +32,7 @@ const UserDetailsPage = () => {
 
   const fetchUserDetail = async () => {
     try {
+      dispatch(showLoading());
       const [userData, avatar, userLimits] = await Promise.all([
         fetchUserDetailById(userId),
         getRandomAvatar(),
@@ -40,13 +42,17 @@ const UserDetailsPage = () => {
       setAvatarUrl(avatar);
       setLimits(userLimits);
       saveToCache({ user: userData, avatarUrl: avatar, limits: userLimits });
-    } catch (err: any) {
+    }
+    catch (err: any) {
       const errorPayload: Error = {
         code: err?.response?.status || 500,
         message: err?.message || "User informations cannot be shown",
       };
       dispatch(setError(errorPayload));
       navigate("/error");
+    }
+    finally {
+      dispatch(hideLoading());
     }
   };
 

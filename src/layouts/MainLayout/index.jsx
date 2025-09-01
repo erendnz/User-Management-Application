@@ -14,17 +14,9 @@ const MainLayout = ({ children }) => {
   const isLoading = useSelector((state) => state.loading.isLoading);
 
   useEffect(() => {
-    dispatch(showLoading());
-
-    const timeout = setTimeout(() => {
-      dispatch(hideLoading());
-      dispatch(closeSidebar());
-    }, 200);
-
-    return () => clearTimeout(timeout);
+    dispatch(closeSidebar());
   }, [location.pathname]);
 
-  
   if (isLoading) {
     return (
       <div className="main-layout">

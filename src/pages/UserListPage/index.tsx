@@ -5,13 +5,12 @@ import { User } from "../../types/User";
 import { fetchUsers } from "../../services/api.ts";
 import "./index.scss";
 import { userListColumns } from "./columns.tsx";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setError } from "../../store/reducers/globalErrorSlice.ts";
 import { Error } from "../../types/Error.ts";
+import { hideLoading, showLoading } from "../../store/reducers/globalLoadingSlice.ts";
 
 export default function UserList() {
-  const [rows, setRows] = useState<User[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -19,9 +18,11 @@ export default function UserList() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const cachedUsers = localStorage.getItem("user-list");
+  const [rows, setRows] = useState<User[]>(cachedUsers ? JSON.parse(cachedUsers) : []);
 
   const loadUsers = async () => {
     try {
+      dispatch(showLoading());
       const users = await fetchUsers();
       setRows(users);
       localStorage.setItem("user-list", JSON.stringify(users));
@@ -35,18 +36,14 @@ export default function UserList() {
       navigate("/error");
     }
     finally {
-      setLoading(false);
+      dispatch(hideLoading());
     }
   };
 
   useEffect(() => {
-    if (cachedUsers) {
-      setRows(JSON.parse(cachedUsers));
-      setLoading(false);
-      return;
+    if (!cachedUsers) {
+      loadUsers();
     }
-
-    loadUsers();
   }, []);
 
   return (
@@ -56,7 +53,7 @@ export default function UserList() {
           rowKey="id"
           columns={userListColumns((id) => navigate(`/users/${id}`))}
           dataSource={rows}
-          loading={loading}
+          loading={useSelector((state: any) => state.loading.isLoading)}
           pagination={{
             current: currentPage,
             pageSize,
