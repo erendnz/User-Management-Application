@@ -4,11 +4,39 @@ import { Limit } from "../../../types/Limit";
 import { DeleteOutlined } from "@ant-design/icons";
 
 export const limitColumns = (
-  onLimitDeleted: (id: string) => void
+  onLimitDeleted: (id: string) => void,
+  currency: string
 ): ColumnsType<Limit> => [
-    { title: "Limit Period", dataIndex: "limitPeriod", key: "limitPeriod" },
-    { title: "Limit Type", dataIndex: "limitType", key: "limitType" },
-    { title: "Value Type", dataIndex: "limitValueType", key: "limitValueType" },
+    {
+      title: "Limit Period",
+      dataIndex: "limitPeriod",
+      key: "limitPeriod",
+    },
+    {
+      title: "Limit Type",
+      dataIndex: "limitType",
+      key: "limitType",
+    },
+    {
+      title: "Limit Value",
+      dataIndex: "limitValue",
+      key: "limitValue",
+      render: (value: number, record: Limit) => {
+        if (record.limitValueType === "percent") {
+          return `${value}%`;
+        }
+        return new Intl.NumberFormat(undefined, {
+          style: "currency",
+          currency,
+          minimumFractionDigits: 2,
+        }).format(value);
+      },
+    },
+    {
+      title: "Value Type",
+      dataIndex: "limitValueType",
+      key: "limitValueType",
+    },
     {
       title: "Status",
       dataIndex: "status",

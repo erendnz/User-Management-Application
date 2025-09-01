@@ -17,8 +17,8 @@ const UserDetailsPage = () => {
   const [avatarUrl, setAvatarUrl] = useState<string>("");
   const [limits, setLimits] = useState<Limit[]>([]);
   const dispatch = useDispatch();
-  const navigate = useNavigate();  
-  
+  const navigate = useNavigate();
+
   const cachedUser = localStorage.getItem(`user-${userId}`);
   const cachedAvatar = localStorage.getItem(`avatar-${userId}`);
   const cachedLimits = localStorage.getItem(`limits-${userId}`);
@@ -77,6 +77,7 @@ const UserDetailsPage = () => {
           onLimitDeleted={handleLimitDelete}
           onLimitAdded={handleLimitAdd}
           limits={limits}
+          currency={user?.bank?.currency || ""}
         />
       </div>
     </div>

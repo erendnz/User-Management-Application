@@ -1,5 +1,5 @@
 import { Table, Button } from "antd";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Limit } from "../../../types/Limit.ts";
 import "./index.scss";
 import AddLimitModal from "../../../modals/AddLimitModal/index.tsx";
@@ -9,15 +9,24 @@ const UserLimits = ({
   limits,
   onLimitAdded,
   onLimitDeleted,
+  currency,
 }: {
   limits: Limit[];
   onLimitAdded: (newLimit: Limit) => void;
   onLimitDeleted: (id: string) => void;
+  currency: string;
 }) => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [pageSize, setPageSize] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const columns = useMemo(
+    () => limitColumns(onLimitDeleted, currency),
+    [onLimitDeleted, currency]
+  );
+
+
 
   return (
     <div className="user-limits-table">
@@ -29,7 +38,7 @@ const UserLimits = ({
       </div>
 
       <Table
-        columns={limitColumns(onLimitDeleted)}
+        columns={columns}
         dataSource={limits}
         rowKey="id"
         pagination={{
