@@ -12,6 +12,7 @@ import { setError } from '../../store/reducers/globalErrorSlice.ts';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from '../../store/reducers/globalLoadingSlice.ts';
 import { useGetLimitsQuery } from '../../services/limitsApi.ts';
+import { preloadImage } from '../../utils/preLoadImage.ts';
 
 const UserDetailsPage = () => {
   const { userId } = useParams();
@@ -29,9 +30,9 @@ const UserDetailsPage = () => {
 
   const [user, setUser] = useState<User | null>(parsedCache?.user ?? null);
   const [avatarUrl, setAvatarUrl] = useState<string>(parsedCache?.avatarUrl ?? '');
-  const [limits, setLimits] = useState<Limit[]>(parsedCache?.limits ?? []);
 
   const { data: apiLimits } = useGetLimitsQuery();
+  const [limits, setLimits] = useState<Limit[]>(parsedCache?.limits ?? apiLimits);
 
   const fetchUserDetail = async () => {
     try {
@@ -41,6 +42,7 @@ const UserDetailsPage = () => {
         getRandomAvatar(),
       ]);
       setUser(userData);
+      await preloadImage(avatar);
       setAvatarUrl(avatar);
       setLimits(apiLimits);
       saveToCache({ user: userData, avatarUrl: avatar, limits: apiLimits });

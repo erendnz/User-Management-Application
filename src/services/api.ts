@@ -16,13 +16,6 @@ export const fetchUserDetailById = async userId => {
   return data;
 };
 
-export const fetchLimits = async () => {
-  const res = await fetch(`${BASE_URL}/c/a022-21ef-4179-910f`);
-  if (!res.ok) throw new Error('Failed to fetch limits');
-  const data = await res.json();
-  return data;
-};
-
 export const fetchAvatars = async () => {
   const res = await fetch(`https://picsum.photos/v2/list?page=2&limit=10`);
   if (!res.ok) throw new Error('Failed to fetch avatars');
