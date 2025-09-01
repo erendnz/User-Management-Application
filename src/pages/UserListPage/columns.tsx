@@ -1,6 +1,6 @@
 import { ColumnsType } from "antd/es/table";
 import { User } from "../../types/User";
-import { EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { EyeOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 
 export const userListColumns = (

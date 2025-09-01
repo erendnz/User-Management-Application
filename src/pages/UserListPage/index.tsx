@@ -69,9 +69,6 @@ export default function UserList() {
             },
             locale: { items_per_page: "" },
           }}
-          onRow={(record) => ({
-            onClick: () => navigate(`/users/${record.id}`),
-          })}
           title={() => <h4 className="title">User List</h4>}
         />
       </div>
