@@ -1,0 +1,80 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Table } from "antd";
+import { User } from "../../types/User";
+import { fetchUsers } from "../../services/api.ts";
+import "./index.scss";
+import { userListColumns } from "./columns.tsx";
+import { useDispatch } from "react-redux";
+import { setError } from "../../store/globalErrorSlice.ts";
+import { Error } from "../../types/Error.ts";
+
+export default function UserList() {
+  const [rows, setRows] = useState<User[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [pageSize, setPageSize] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const cachedUsers = localStorage.getItem("user-list");
+
+  const loadUsers = async () => {
+    try {
+      const users = await fetchUsers();
+      setRows(users);
+      localStorage.setItem("user-list", JSON.stringify(users));
+    }
+    catch (err: any) {
+      const errorPayload: Error = {
+        code: err?.response?.status || 500,
+        message: err?.message || "Users could not be fetched",
+      };
+      dispatch(setError(errorPayload));
+      navigate("/error");
+    }
+    finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (cachedUsers) {
+      setRows(JSON.parse(cachedUsers));
+      setLoading(false);
+      return;
+    }
+
+    loadUsers();
+  }, []);
+
+  return (
+    <div className="userListContainer">
+      <div className="tableWrapper">
+        <Table<User>
+          rowKey="id"
+          columns={userListColumns((id) => navigate(`/users/${id}`))}
+          dataSource={rows}
+          loading={loading}
+          pagination={{
+            current: currentPage,
+            pageSize,
+            showSizeChanger: true,
+            pageSizeOptions: ["5", "10", "20"],
+            position: ["bottomCenter"],
+            onChange: (page, size) => {
+              setCurrentPage(page);
+              setPageSize(size);
+            },
+            locale: { items_per_page: "" },
+          }}
+          onRow={(record) => ({
+            onClick: () => navigate(`/users/${record.id}`),
+          })}
+          title={() => <h4 className="title">User List</h4>}
+        />
+      </div>
+    </div>
+  );
+}

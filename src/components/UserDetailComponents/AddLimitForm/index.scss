@@ -1,0 +1,24 @@
+.add-limit-form {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 1rem;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  .form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    > .ant-form-item {
+      flex: 1;
+    }
+  }
+
+  .ant-btn {
+    width: 100%;
+    height: 40px;
+    font-weight: 500;
+  }
+}

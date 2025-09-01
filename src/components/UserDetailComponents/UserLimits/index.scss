@@ -1,0 +1,43 @@
+.user-limits-table {
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .table-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #333;
+      margin: 0;
+      margin-left: 4px;
+    }
+
+    .ant-btn {
+      font-weight: 500;
+    }
+  }
+
+  .ant-table {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+
+    .ant-table-thead>tr>th {
+      background-color: #EEF3FF !important;
+      font-weight: 600;
+      color: #222;
+      font-size: 15px;
+    }
+
+    .ant-table-tbody>tr>td {
+      font-size: 14px;
+      color: #444;
+    }
+  }
+
+  .ant-table-cell {
+    text-transform: capitalize;
+  }
+}

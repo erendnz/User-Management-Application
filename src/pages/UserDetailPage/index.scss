@@ -1,0 +1,13 @@
+.user-details-page-container {
+  display: flex;
+  gap: 32px;
+
+  .user-detail-card {
+    width: 25%;
+    min-width: 250px;
+  }
+
+  .user-limit-section {
+    width: 75%;
+  }
+}

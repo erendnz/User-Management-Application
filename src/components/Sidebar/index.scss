@@ -1,0 +1,51 @@
+  .sidebar {
+    background-color: #001529;
+    color: #fff;
+    transition: width 0.3s ease;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+
+    &.collapsed {
+      width: 80px;
+      align-items: center;
+    }
+
+    .toggle-btn {
+      padding: 1rem;
+      font-size: 1.2rem;
+      cursor: pointer;
+      text-align: right;
+      color: #fff;
+    }
+
+    .menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      &:hover {
+        background-color: #0a1f3d;
+      }
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        cursor: pointer;
+        transition: background 0.2s;
+
+        svg {
+          font-size: 1.2rem;
+        }
+
+        span {
+          font-size: 1rem;
+        }
+      }
+    }
+  }

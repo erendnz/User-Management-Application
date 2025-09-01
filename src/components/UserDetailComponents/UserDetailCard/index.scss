@@ -1,0 +1,39 @@
+.user-details-card-container {
+  max-width: 300px;
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+}
+
+.user-detail-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: start;
+}
+
+.username {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0px;
+}
+
+.line {
+  width: 60%;
+  margin: 16px 0;
+  border-color: #ddd;
+}
+
+.user-info {
+  width: 100%;
+  p {
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #555;
+
+    strong {
+      color: #222;
+    }
+  }
+}
