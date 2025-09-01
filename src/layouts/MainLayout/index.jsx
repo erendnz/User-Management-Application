@@ -13,6 +13,7 @@ const MainLayout = ({ children }) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.loading.isLoading);
 
+  // when page changes closes sidebar automatically
   useEffect(() => {
     dispatch(closeSidebar());
   }, [location.pathname]);

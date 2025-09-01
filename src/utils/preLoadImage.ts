@@ -1,3 +1,4 @@
+// loads image which given url
 export const preloadImage = (url: string): Promise<void> =>
   new Promise((resolve, reject) => {
     const img = new Image();

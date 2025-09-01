@@ -31,9 +31,9 @@ const UserDetailsPage = () => {
   const [user, setUser] = useState<User | null>(parsedCache?.user ?? null);
   const [avatarUrl, setAvatarUrl] = useState<string>(parsedCache?.avatarUrl ?? '');
 
-  const { data: apiLimits } = useGetLimitsQuery();
+  const { data: apiLimits } = useGetLimitsQuery(); // calls redux query to fetch limits
   const [limits, setLimits] = useState<Limit[]>(parsedCache?.limits ?? apiLimits);
-
+  
   const fetchUserDetail = async () => {
     try {
       dispatch(showLoading());
@@ -64,6 +64,7 @@ const UserDetailsPage = () => {
     }
   }, [userId]);
 
+  //caches user's details, iamge url and limits 
   const saveToCache = (data: CachedUserData) => {
     localStorage.setItem(`user-detail-${userId}`, JSON.stringify(data));
   };

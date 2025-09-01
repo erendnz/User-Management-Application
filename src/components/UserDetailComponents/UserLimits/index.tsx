@@ -20,7 +20,8 @@ const UserLimits = ({
   const [pageSize, setPageSize] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const columns = useMemo(() => limitColumns(onLimitDeleted, currency), [onLimitDeleted, currency]);
+  // renders columns only when column is deleted or currency is changed to prevent recomputing
+  const columns = useMemo(() => limitColumns(onLimitDeleted, currency), [onLimitDeleted, currency]); 
 
   return (
     <div className="user-limits-table">
