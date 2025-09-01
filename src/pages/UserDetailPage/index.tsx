@@ -13,15 +13,21 @@ import { useDispatch } from "react-redux";
 
 const UserDetailsPage = () => {
   const { userId } = useParams();
-  const [user, setUser] = useState<User | null>(null);
-  const [avatarUrl, setAvatarUrl] = useState<string>("");
-  const [limits, setLimits] = useState<Limit[]>([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const cachedUser = localStorage.getItem(`user-${userId}`);
-  const cachedAvatar = localStorage.getItem(`avatar-${userId}`);
-  const cachedLimits = localStorage.getItem(`limits-${userId}`);
+  const cachedData = localStorage.getItem(`user-detail-${userId}`);
+  const parsedCache: CachedUserData | null = cachedData ? JSON.parse(cachedData) : null;
+
+  const [user, setUser] = useState<User | null>(parsedCache?.user ?? null);
+  const [avatarUrl, setAvatarUrl] = useState<string>(parsedCache?.avatarUrl ?? "");
+  const [limits, setLimits] = useState<Limit[]>(parsedCache?.limits ?? []);
+
+  type CachedUserData = {
+    user: User;
+    avatarUrl: string;
+    limits: Limit[];
+  };
 
   const fetchUserDetail = async () => {
     try {
@@ -33,9 +39,7 @@ const UserDetailsPage = () => {
       setUser(userData);
       setAvatarUrl(avatar);
       setLimits(userLimits);
-      localStorage.setItem(`user-${userId}`, JSON.stringify(userData));
-      localStorage.setItem(`avatar-${userId}`, JSON.stringify(avatar));
-      localStorage.setItem(`limits-${userId}`, JSON.stringify(userLimits));
+      saveToCache({ user: userData, avatarUrl: avatar, limits: userLimits });
     } catch (err: any) {
       const errorPayload: Error = {
         code: err?.response?.status || 500,
@@ -46,23 +50,32 @@ const UserDetailsPage = () => {
     }
   };
 
-  useEffect(() => {
-    if (cachedUser && cachedAvatar && cachedLimits) {
-      setUser(JSON.parse(cachedUser));
-      setAvatarUrl(JSON.parse(cachedAvatar));
-      setLimits(JSON.parse(cachedLimits));
-      return;
-    }
 
-    fetchUserDetail();
+  useEffect(() => {
+    if (!parsedCache) {
+      fetchUserDetail();
+    }
   }, [userId]);
 
+  const saveToCache = (data: CachedUserData) => {
+    localStorage.setItem(`user-detail-${userId}`, JSON.stringify(data));
+  };
+
+
   const handleLimitDelete = (id: string) => {
-    setLimits((prevLimits) => prevLimits.filter((limit) => limit.id !== id));
+    setLimits((prevLimits) => {
+      const updated = prevLimits.filter((limit) => limit.id !== id);
+      saveToCache({ user: user!, avatarUrl, limits: updated });
+      return updated;
+    });
   };
 
   const handleLimitAdd = (newLimit: Limit) => {
-    setLimits((prev) => [...prev, newLimit]);
+    setLimits((prev) => {
+      const updated = [...prev, newLimit];
+      saveToCache({ user: user!, avatarUrl, limits: updated });
+      return updated;
+    });
   };
 
   if (!user) return null;
