@@ -11,11 +11,18 @@ import { Error } from '../../types/Error.ts';
 import { setError } from '../../store/reducers/globalErrorSlice.ts';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from '../../store/reducers/globalLoadingSlice.ts';
+import { useGetLimitsQuery } from '../../services/limitsApi.ts';
 
 const UserDetailsPage = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  type CachedUserData = {
+    user: User;
+    avatarUrl: string;
+    limits: Limit[];
+  };
 
   const cachedData = localStorage.getItem(`user-detail-${userId}`);
   const parsedCache: CachedUserData | null = cachedData ? JSON.parse(cachedData) : null;
@@ -24,24 +31,19 @@ const UserDetailsPage = () => {
   const [avatarUrl, setAvatarUrl] = useState<string>(parsedCache?.avatarUrl ?? '');
   const [limits, setLimits] = useState<Limit[]>(parsedCache?.limits ?? []);
 
-  type CachedUserData = {
-    user: User;
-    avatarUrl: string;
-    limits: Limit[];
-  };
+  const { data: apiLimits } = useGetLimitsQuery();
 
   const fetchUserDetail = async () => {
     try {
       dispatch(showLoading());
-      const [userData, avatar, userLimits] = await Promise.all([
+      const [userData, avatar] = await Promise.all([
         fetchUserDetailById(userId),
         getRandomAvatar(),
-        fetchLimits(),
       ]);
       setUser(userData);
       setAvatarUrl(avatar);
-      setLimits(userLimits);
-      saveToCache({ user: userData, avatarUrl: avatar, limits: userLimits });
+      setLimits(apiLimits);
+      saveToCache({ user: userData, avatarUrl: avatar, limits: apiLimits });
     } catch (err: any) {
       const errorPayload: Error = {
         code: err?.response?.status || 500,
